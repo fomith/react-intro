@@ -1,0 +1,42 @@
+.dialogs {
+  display: grid;
+  grid-template-columns: 3fr 9fr;
+}
+
+.dialogs_items {}
+
+.item a {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  background-color: cadetblue;
+  border-radius: 10px;
+  padding: 5px;
+  color: #f8f9fa;
+  text-decoration: none;
+  transition: .3s;
+}
+
+.item a:hover p {
+  color: #f8f9fa;
+  transition: .3s;
+}
+
+.messages_item {}
+
+.message {}
+
+.active {
+  color: #f8f9fa;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+p {
+  margin-left: 10px;
+  max-width: 90%;
+}

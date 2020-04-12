@@ -1,0 +1,23 @@
+textarea {
+  width: 640px;
+  display: block;
+  margin: 10px;
+  height: 70px;
+  border: none;
+  background-color: #f8f9fa;
+}
+
+
+h3 {
+  margin-left: 10px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn {
+  margin-right: 10px;
+}

@@ -1,0 +1,38 @@
+.dialogs {
+  display: flex;
+  width: 830px;
+  margin-right: 0px;
+  margin-left: auto;
+  grid-template-columns: 2fr 10fr;
+}
+
+.dialogs_items {
+  position: fixed;
+}
+
+.item {}
+
+.messages_item {
+  padding-left: 165px;
+  padding-bottom: 135px;
+}
+
+.message {}
+
+.active {
+  color: #f8f9fa;
+}
+
+.btn {
+  display: block;
+  margin: 0 0 0 auto;
+  margin-right: 10px;
+}
+
+.textareaPosition {
+  position: fixed;
+  width: 660px;
+  padding-bottom: 10px;
+  bottom: 0;
+  background-color: #6c757d;
+}

@@ -1,0 +1,35 @@
+.left {
+    width: 200px;
+    background-color: #343a40;
+  }
+
+  .top {
+    margin-top: 80px;
+    position: fixed;
+    height: 100%;
+  }
+  
+  .right {
+    margin-right: 10px;
+  }
+
+  a {
+    color: #f8f9fa;
+    transition: .3s
+  }
+  
+  a.active {
+    color: #007bff;
+    transition: .5s
+  }
+
+  nav ul {
+    margin: 15px 15px 15px 0px;
+  }
+  
+  .friendsBlock {
+    margin-top: 250px;
+    position: fixed;
+  }
+
+

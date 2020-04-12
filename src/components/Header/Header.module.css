@@ -1,0 +1,31 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #343a40;
+    position: fixed;
+    width: 1050px;
+    
+  }
+  
+  .header ul {
+    width: 350px;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 15px 15px 15px 0px;
+  }
+  
+  .header img {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+  }
+
+  .header a {
+    color: #f8f9fa;
+    transition: .3s
+  }
+
+  a.active {
+    color: #007bff;
+    transition: .5s
+  }
