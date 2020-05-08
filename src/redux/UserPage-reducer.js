@@ -1,19 +1,43 @@
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
+const ADDUSERS = "ADDUSERS";
 
 let initState = {
-  userData: [
-    { UserId: 1, FirstName: "Димыч", LastName: "sdfsdfsdf" , Location: {Sity: "Minsk", Country: "Belarus"}, follow: true},
-    { UserId: 2, FirstName: "Линыч", LastName: "sdfsdfsdf" , Location: {Sity: "Minsk", Country: "Belarus"}, follow: true},
-    { UserId: 3, FirstName: "Сержич", LastName: "sdfsdfsdf" , Location: {Sity: "Minsk", Country: "Belarus"}, follow: true},
-    { UserId: 4, FirstName: "Сашич", LastName: "sdfsdfsdf" , Location: {Sity: "Minsk", Country: "Belarus"}, follow: true},
-    { UserId: 5, FirstName: "Мишич", LastName: "sdfsdfsdf" , Location: {Sity: "Minsk", Country: "Belarus"}, follow: true},
-    { UserId: 6, FirstName: "Бусич", LastName: "sdfsdfsdf" , Location: {Sity: "Minsk", Country: "Belarus"}, follow: true},
-  ],
+  userData: [],
 };
 
 const UserPageReducer = (state = initState, action) => {
+  debugger
   switch (action.type) {
+    case FOLLOW: {
+      let stateCopy = {...state}
+      stateCopy.userData = [...state.userData]
+      stateCopy.userData.filter(a => {
+        if (a.UserId === action.id) {
+          a.follow = !a.follow
+          return a
+        }
+        return a
+      })
+      return stateCopy
+    }
+    case UNFOLLOW: {
+      let stateCopy = {...state}
+      stateCopy.userData = [...state.userData]
+      stateCopy.userData.filter(a => {
+        if (a.UserId === action.id) {
+          a.follow = !a.follow
+          return a
+        }
+        return a
+      })
+      return stateCopy
+    }
+    case ADDUSERS: {
+      let stateCopy = {...state}
+      stateCopy.userData = action.id;
+      return stateCopy
+    }
     default:
       return state;
   }
@@ -29,4 +53,8 @@ export const unfollow = (text) => ({
   id: text,
 });
 
+export const addusers = (text) => ({
+  type: ADDUSERS,
+  id: text,
+});
 export default UserPageReducer;

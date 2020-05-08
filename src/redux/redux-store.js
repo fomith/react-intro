@@ -5,14 +5,14 @@ import sidebarReducer from "./sidebar-reducer";
 import UserPageReducer from "./UserPage-reducer";
 
 let reducers = combineReducers({
-    contentPage: contentPageReducer,
-    dialogsPage: dialogPageReducer,
-    sidebar: sidebarReducer,
-    usersPage: UserPageReducer,
+  contentPage: contentPageReducer,
+  dialogsPage: dialogPageReducer,
+  sidebar: sidebarReducer,
+  usersPage: UserPageReducer,
 });
 
 let store = createStore(reducers);
 
-
+window.store = store;
 
 export default store;
