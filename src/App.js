@@ -8,6 +8,7 @@ import Music from "./components/Music/Music";
 import Setting from "./components/Setting/Setting";
 import ContentContainer from "./components/Content/ContentContainer";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
 function App(props) {
   return (
@@ -18,6 +19,7 @@ function App(props) {
         <content className="content top">
           <Route path="/profile" render={() => <ContentContainer />} />
           <Route path="/dialogs" render={() => <DialogsContainer />} />
+          <Route path="/users" render={() => <UsersContainer />} />
           <Route path="/news" render={() => <News />} />
           <Route path="/music" render={() => <Music />} />
           <Route path="/setting" render={() => <Setting />} />

@@ -30,6 +30,7 @@ const dialogPageReducer = (state = initState, action) => {
   switch (action.type) {
     case ADD_MESSAGE: {
       let newMessage = {
+        postId: state.messageData.length + 1,
         id: 5,
         message: state.newMessageText,
       };

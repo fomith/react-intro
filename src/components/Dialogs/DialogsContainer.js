@@ -13,7 +13,6 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = (dispatch) => {
-  debugger
 return {
   addPost: () => dispatch(addMessageActionCreator()),
   newText: (text) => dispatch(onMessageChangeActionCreator(text)),
