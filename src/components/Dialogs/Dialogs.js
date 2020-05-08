@@ -2,21 +2,19 @@ import React from 'react';
 import a from './Dialogs.module.css';
 import Dialog from './Dialog/Dialog';
 import Message from './Message/Message';
-import { onMessageChangeActionCreator, addMessageActionCreator } from '../../redux/dialogPage-reducer';
 
 const Dialogs = (props) => {
-  let dialogs = props.state.dialogsData.map(d => <Dialog name={d.name} id={d.id} />);
-  let messages = props.state.messageData.map(m => <Message message={m.message} id={m.id} />);
+  let dialogs = props.dialogsData.map(d => <Dialog name={d.name} id={d.id} key={d.id}/>);
+  let messages = props.messageData.map(m => <Message message={m.message} id={m.id} key={m.postId} />);
 
   let newPostElement = React.createRef();
   let addPost = () => {
-    props.dispatch(addMessageActionCreator());
+    props.addPost();
   };
 
   let onPostChange = () => {
     let postMessage = newPostElement.current.value;
-  
-    props.dispatch(onMessageChangeActionCreator(postMessage));
+    props.newText(postMessage);
   };
   return (
     <div className={a.dialogs}>
@@ -29,9 +27,9 @@ const Dialogs = (props) => {
         <div className={a.textareaPosition}>
         <textarea onChange={onPostChange} 
         ref={newPostElement} 
-        value={props.state.newMessageText} 
+        value={props.newMessageText} 
         placeholder="Введите текст"></textarea>
-        <button className={"btn btn-primary" + ' ' + a.btn} onClick={addPost}>Add post</button>
+        <button className={"btn btn-primary " + a.btn} onClick={addPost}>Add post</button>
         </div>
       </div>
     </div>
