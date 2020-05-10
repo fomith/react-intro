@@ -1,79 +1,80 @@
-import React from "react";
+import React, { useEffect } from "react";
 import User from "./User/User";
+import ReactPaginate from "react-paginate";
+import Axios from "axios";
+import a from "./User/user.module.scss";
 
 const Users = (props) => {
-  if (props.data.length === 0) {
-    props.addusers([
-      {
-        UserId: 1,
-        FirstName: "Димыч",
-        LastName: "Фоменко",
-        status: "Привет. 1 запись",
-        Location: { Sity: "Minsk", Country: "Belarus" },
-        follow: false,
-      },
-      {
-        UserId: 2,
-        FirstName: "Линыч",
-        LastName: "Янкова",
-        status: "Привет. 2 запись",
-        Location: { Sity: "Minsk", Country: "Belarus" },
-        follow: true,
-      },
-      {
-        UserId: 3,
-        FirstName: "Сержич",
-        LastName: "Непонятный",
-        status: "Привет. 3 запись",
-        Location: { Sity: "Minsk", Country: "Belarus" },
-        follow: false,
-      },
-      {
-        UserId: 4,
-        FirstName: "Сашич",
-        LastName: "Понятный",
-        status: "Привет. 4 запись",
-        Location: { Sity: "Minsk", Country: "Belarus" },
-        follow: true,
-      },
-      {
-        UserId: 5,
-        FirstName: "Мишич",
-        LastName: "Просто",
-        status: "Привет. 5 запись",
-        Location: { Sity: "Minsk", Country: "Belarus" },
-        follow: true,
-      },
-      {
-        UserId: 6,
-        FirstName: "Бусич",
-        LastName: "Любимыч",
-        status: "Привет. 6 запись",
-        Location: { Sity: "Minsk", Country: "Belarus" },
-        follow: true,
-      },
-    ]);
-  }
-
   const UsersMap = props.data.map((a) => {
     return (
       <User
-        UserId={a.UserId}
-        FirstName={a.FirstName}
+        UserId={a.id}
+        FirstName={a.name}
         LastName={a.LastName}
         status={a.status}
+        photos={a.photos}
         Location={a.Location}
-        sub={a.follow}
+        sub={a.followed}
         follow={props.follow}
         unfollow={props.unfollow}
-        key={a.UserId}
+        key={a.id}
       />
     );
   });
+
+  useEffect(() => {
+    props.fetchingAC(true);
+    Axios.get(
+      `https://social-network.samuraijs.com/api/1.0/users?page=${props.currentPage}`
+    ).then((response) => {
+      props.addusers(response);
+      props.fetchingAC(false);
+    });
+  }, []);
+
+  /*   let pagesMap = pages.map((a) => {
+      return <button onClick={() => }>{a}</button>;
+  }); */
+
+  let openPage = (selectedPage) => {
+    props.newPage(selectedPage.selected + 1);
+    props.fetchingAC(true);
+    Axios.get(
+      `https://social-network.samuraijs.com/api/1.0/users?page=${selectedPage.selected + 1}`
+    ).then((response) => {
+      props.addusers(response);
+      props.fetchingAC(false);
+    });
+  };
+
+  let pageCount = Math.ceil(props.totalCount / 10);
   return (
     <div>
       <h1>Users page</h1>
-      <div>{UsersMap}</div>
+      <div className={a.pagination}>
+        <ReactPaginate
+          previousLabel={"previous"}
+          nextLabel={"next"}
+          breakLabel={"..."}
+          breakClassName={"break-me"}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={openPage}
+          containerClassName={"pagination"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          nextClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextLinkClassName={"page-link"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"}
+        />
+      </div>
+      { (props.fetching == true) ? <div className={a.flexCA}><div class={a.ldsRoller}><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> </div>: <div>{UsersMap}</div> }
+
+
     </div>
   );
 };
