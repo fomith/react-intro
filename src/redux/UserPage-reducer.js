@@ -7,6 +7,9 @@ const FETCHING = "FETCHING";
 let initState = {
   userData: [],
   fetching: true,
+  totalCount: 0,
+  userCountPage: 0,
+  currentPage: 1,
 };
 
 const UserPageReducer = (state = initState, action) => {
@@ -73,9 +76,9 @@ export const addusers = (text) => ({
 });
 export const newPage = (text) => ({
   type: NEW_PAGE,
-  id: text.selected,
+  id: text,
 });
-export const fetching = (text) => ({
+export const fetchingAC = (text) => ({
   type: FETCHING,
   id: text,
 });

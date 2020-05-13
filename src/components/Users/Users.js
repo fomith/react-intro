@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import User from "./User/User";
 import ReactPaginate from "react-paginate";
 import Axios from "axios";
@@ -22,7 +22,7 @@ const Users = (props) => {
     );
   });
 
-  useEffect(() => {
+  if (props.data.length === 0) {
     props.fetchingAC(true);
     Axios.get(
       `https://social-network.samuraijs.com/api/1.0/users?page=${props.currentPage}`
@@ -30,17 +30,15 @@ const Users = (props) => {
       props.addusers(response);
       props.fetchingAC(false);
     });
-  }, []);
-
-  /*   let pagesMap = pages.map((a) => {
-      return <button onClick={() => }>{a}</button>;
-  }); */
+  }
 
   let openPage = (selectedPage) => {
     props.newPage(selectedPage.selected + 1);
     props.fetchingAC(true);
     Axios.get(
-      `https://social-network.samuraijs.com/api/1.0/users?page=${selectedPage.selected + 1}`
+      `https://social-network.samuraijs.com/api/1.0/users?page=${
+        selectedPage.selected + 1
+      }`
     ).then((response) => {
       props.addusers(response);
       props.fetchingAC(false);
@@ -61,6 +59,7 @@ const Users = (props) => {
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
           onPageChange={openPage}
+          forcePage={props.currentPage - 1}
           containerClassName={"pagination"}
           pageClassName={"page-item"}
           pageLinkClassName={"page-link"}
@@ -72,9 +71,22 @@ const Users = (props) => {
           activeClassName={"active"}
         />
       </div>
-      { (props.fetching == true) ? <div className={a.flexCA}><div class={a.ldsRoller}><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> </div>: <div>{UsersMap}</div> }
-
-
+      {props.fetching === true ? (
+        <div className={a.flexCA}>
+          <div className={a.ldsRoller}>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>{" "}
+        </div>
+      ) : (
+        <div>{UsersMap}</div>
+      )}
     </div>
   );
 };

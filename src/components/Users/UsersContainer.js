@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Users from "./Users";
-import { follow, unfollow, addusers, newPage, fetching } from "../../redux/UserPage-reducer";
+import { follow, unfollow, addusers, newPage, fetchingAC } from "../../redux/UserPage-reducer";
 
 const mapState = (state) => {
   window.state = state;
@@ -12,16 +12,7 @@ const mapState = (state) => {
     fetching: state.usersPage.fetching
   };
 };
-const mapDispatch = (dispatch) => {
-  return {
-    follow: (text) => dispatch(follow(text)),
-    unfollow: (text) => dispatch(unfollow(text)),
-    addusers: (text) => dispatch(addusers(text)),
-    newPage: (text) => dispatch(newPage(text)),
-    fetchingAC: (text) => dispatch(fetching(text))
-  };
-};
 
-const UsersContainer = connect(mapState, mapDispatch)(Users);
+const UsersContainer = connect(mapState, {follow, unfollow, addusers, newPage, fetchingAC})(Users);
 
 export default UsersContainer;
