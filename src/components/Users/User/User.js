@@ -3,7 +3,6 @@ import a from "./user.module.scss";
 import { NavLink } from "react-router-dom";
 
 const User = (props) => {
-    debugger
   return (
     <div className={a.flexC + " " + a.container}>
       <div className={a.flex}>

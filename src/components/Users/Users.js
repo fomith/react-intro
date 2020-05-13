@@ -3,6 +3,7 @@ import User from "./User/User";
 import ReactPaginate from "react-paginate";
 import Axios from "axios";
 import a from "./User/user.module.scss";
+import Loader from "../Loader/Loader";
 
 const Users = (props) => {
   const UsersMap = props.data.map((a) => {
@@ -71,22 +72,7 @@ const Users = (props) => {
           activeClassName={"active"}
         />
       </div>
-      {props.fetching === true ? (
-        <div className={a.flexCA}>
-          <div className={a.ldsRoller}>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>{" "}
-        </div>
-      ) : (
-        <div>{UsersMap}</div>
-      )}
+      {props.fetching === true ? <Loader /> : <div>{UsersMap}</div>}
     </div>
   );
 };

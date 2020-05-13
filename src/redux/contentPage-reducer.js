@@ -1,7 +1,11 @@
 const ADD_POST = "ADD-POST";
 const CHANGE_TEXT_NEW_POST = "CHANGE-TEXT-NEW-POST";
+const SET_USER_PROFILE = "SET_USER_PROFILE";
+const FETCHING= "FETCHING"
 
 let initState = {
+  profileData: null,
+  fetching: true,
   userData: [
     { userId: 1, name: "Дмитрий ", lastName: "Фамильян", avatar: 2 },
     { userId: 2, name: "Ваня", lastName: "Куцен", avatar: 1 },
@@ -36,24 +40,30 @@ const contentPageReducer = (state = initState, action) => {
         LikesKount: 0,
         userId: 1,
       };
-      let stateCopy = {...state}
-      stateCopy.postsData = [...state.postsData]
+      let stateCopy = { ...state };
+      stateCopy.postsData = [...state.postsData];
       stateCopy.postsData.unshift(newPost);
       stateCopy.newPostText = "";
       return stateCopy;
     }
     case CHANGE_TEXT_NEW_POST: {
-      let stateCopy = {...state}
+      let stateCopy = { ...state };
       stateCopy.newPostText = action.message;
       return stateCopy;
     }
+    case SET_USER_PROFILE:
+      return { ...state, profileData: action.data };
+    case FETCHING: return{...state, fetching: action.fetching}
     default:
       return state;
   }
-
 };
 
 export const addPostActionCreator = () => ({ type: ADD_POST });
+
+export const setUserProfile = (data) => ({ type: SET_USER_PROFILE, data });
+
+export const fetchingAC = (fetching) => ({ type: FETCHING, fetching });
 
 export const onPostChangeActionCreator = (text) => ({
   type: CHANGE_TEXT_NEW_POST,

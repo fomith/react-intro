@@ -17,7 +17,7 @@ function App(props) {
       <main>
         <Navbar />
         <content className="content top">
-          <Route path="/profile" render={() => <ContentContainer />} />
+          <Route path="/profile/:userid?" render={() => <ContentContainer />} />
           <Route path="/dialogs" render={() => <DialogsContainer />} />
           <Route path="/users" render={() => <UsersContainer />} />
           <Route path="/news" render={() => <News />} />
