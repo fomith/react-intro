@@ -1,22 +1,38 @@
-import React from 'react';
-import a from '../Header/Header.module.css';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import a from "../Header/Header.module.css";
+import { NavLink } from "react-router-dom";
+import { authMeAPI } from "../../api/api";
 
-const Header = () => {
-    return (
-        <header className={a.header}>
+const Header = (props) => {
+  authMeAPI()
+    .then((response) => {
+      return {
+        id: response.data.data.id,
+        login: response.data.data.login,
+        email: response.data.data.email,
+      };
+    })
+    .then((data) => {
+      props.auth(data);
+    });
+  return (
+    <header className={a.header}>
+      <img
+        src="https://avatars.mds.yandex.net/get-pdb/1605413/2d7ca512-f063-43a7-bf0f-6175b35577fb/s1200?webp=false"
+        alt="asd"
+      />
 
-            <img src="https://avatars.mds.yandex.net/get-pdb/1605413/2d7ca512-f063-43a7-bf0f-6175b35577fb/s1200?webp=false" alt="asd" />
-            <ul>
-                <li><NavLink to="/profile" activeClassName={a.active}>Profile</NavLink></li>
-                <li><NavLink to="/dialogs" activeClassName={a.active}>Messages</NavLink></li>
-                    <li><NavLink to="/users" activeClassName={a.active}>Users</NavLink></li>
-                <li><NavLink to="/news" activeClassName={a.active}>News</NavLink></li>
-                <li><NavLink to="/Music" activeClassName={a.active}>Music</NavLink></li>
-                <li><NavLink to="/Setting" activeClassName={a.active}>Setting</NavLink></li>
-            </ul>
-        </header>
-    )
+      {!props.Id ? (
+        <NavLink to="/login" className={a.login}>
+          Login
+        </NavLink>
+      ) : (
+        <NavLink to="/login" className={a.login}>
+          {props.Login}
+        </NavLink>
+      )}
+    </header>
+  );
 };
 
 export default Header;

@@ -1,9 +1,13 @@
 const ADD_POST = "ADD-POST";
 const CHANGE_TEXT_NEW_POST = "CHANGE-TEXT-NEW-POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
-const FETCHING= "FETCHING"
+const FETCHING = "FETCHING";
+const AUTH = "AUTH";
 
 let initState = {
+  Id: 0,
+  Login: "",
+  Email: "",
   profileData: null,
   fetching: true,
   userData: [
@@ -53,7 +57,17 @@ const contentPageReducer = (state = initState, action) => {
     }
     case SET_USER_PROFILE:
       return { ...state, profileData: action.data };
-    case FETCHING: return{...state, fetching: action.fetching}
+
+    case FETCHING:
+      return { ...state, fetching: action.fetching };
+
+    case AUTH:
+      return {
+        ...state,
+        Id: action.id,
+        Login: action.login,
+        Email: action.email,
+      };
     default:
       return state;
   }
@@ -64,6 +78,8 @@ export const addPostActionCreator = () => ({ type: ADD_POST });
 export const setUserProfile = (data) => ({ type: SET_USER_PROFILE, data });
 
 export const fetchingAC = (fetching) => ({ type: FETCHING, fetching });
+
+export const auth = (data) => ({ type: AUTH, id: data.id, login: data.login, email: data.email });
 
 export const onPostChangeActionCreator = (text) => ({
   type: CHANGE_TEXT_NEW_POST,

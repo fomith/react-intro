@@ -21,9 +21,16 @@
     margin: 10px;
   }
 
-  .header a {
+  .login {
     color: #f8f9fa;
-    transition: .3s
+    transition: .3s;
+    padding: 20px;
+  }
+
+  .acc {
+    color: #f8f9fa;
+    transition: .3s;
+    padding: 20px;
   }
 
   a.active {

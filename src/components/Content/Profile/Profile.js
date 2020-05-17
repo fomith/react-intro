@@ -5,7 +5,9 @@ import Loader from "../../Loader/Loader";
 const Profile = (props) => {
   return (
     <div className={a.description}>
-      {props.fetching === true ? <Loader /> : (
+      {props.fetching === true 
+      ? <Loader /> 
+      : (
         <div className={a.desc}>
           <img className={a.img} src={props.profileData.photos.large} alt="asd"></img>
           <div>
@@ -15,7 +17,7 @@ const Profile = (props) => {
             <p className="age">{props.name}</p>
             <div>
               <a className="badge badge-primary" href={"https://" + props.profileData.contacts.facebook}>facebook</a>
-              <a className="badge badge-primary" href={props.profileData.contacts.vk}>vk</a>
+              <a className="badge badge-primary" href={"https://" + props.profileData.contacts.vk}>vk</a>
               <a className="badge badge-primary" href={"https://" + props.profileData.contacts.website}>website</a>
               <a className="badge badge-primary" href={"https://" + props.profileData.contacts.twitter}>twitter</a>
               <a className="badge badge-primary" href={"https://" + props.profileData.contacts.instagram}>instagram</a>
@@ -23,7 +25,6 @@ const Profile = (props) => {
               <a className="badge badge-primary" href={"https://" + props.profileData.contacts.github}>github</a>
               <a className="badge badge-primary" href={"https://" + props.profileData.contacts.mainLink}>mainLink</a>
             </div>
-            <a></a>
           </div>
         </div>
       )}

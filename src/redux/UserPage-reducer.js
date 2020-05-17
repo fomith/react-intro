@@ -15,6 +15,7 @@ let initState = {
 const UserPageReducer = (state = initState, action) => {
   switch (action.type) {
     case FOLLOW: {
+      debugger
       let stateCopy = { ...state };
       stateCopy.userData = [...state.userData];
       stateCopy.userData.filter((a) => {
@@ -27,6 +28,7 @@ const UserPageReducer = (state = initState, action) => {
       return stateCopy;
     }
     case UNFOLLOW: {
+      debugger
       let stateCopy = { ...state };
       stateCopy.userData = [...state.userData];
       stateCopy.userData.filter((a) => {
