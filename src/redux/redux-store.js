@@ -1,8 +1,9 @@
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 import contentPageReducer from "./contentPage-reducer";
 import dialogPageReducer from "./dialogPage-reducer";
 import sidebarReducer from "./sidebar-reducer";
 import UserPageReducer from "./UserPage-reducer";
+import ThunkMiddleware from 'redux-thunk'
 
 let reducers = combineReducers({
   contentPage: contentPageReducer,
@@ -11,7 +12,7 @@ let reducers = combineReducers({
   usersPage: UserPageReducer,
 });
 
-let store = createStore(reducers);
+let store = createStore(reducers, applyMiddleware(ThunkMiddleware));
 
 window.store = store;
 

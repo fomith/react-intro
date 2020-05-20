@@ -50,9 +50,9 @@ const dialogPageReducer = (state = initState, action) => {
   }
 };
 
-export const addMessageActionCreator = () => ({ type: ADD_MESSAGE });
+export const addPost = () => ({ type: ADD_MESSAGE });
 
-export const onMessageChangeActionCreator = (text) => ({
+export const newText = (text) => ({
   type: CHANGE_TEXT_MESSAGE_POST,
   message: text,
 });

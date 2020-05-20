@@ -1,6 +1,6 @@
 import Content from "./Content";
 import { connect } from "react-redux";
-import { addPostActionCreator, onPostChangeActionCreator, fetchingAC } from "../../redux/contentPage-reducer";
+import { setData, updText, fetchingAC } from "../../redux/contentPage-reducer";
 
 const mapStateToProps = (state) => {
   return {
@@ -10,14 +10,7 @@ const mapStateToProps = (state) => {
     fetching: state.contentPage.fetching
   };
 };
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setData: () => dispatch(addPostActionCreator()),
-    updText: (text) => dispatch(onPostChangeActionCreator(text)),
-    fetchingAC: (text) => dispatch(fetchingAC(text))
-  };
-};
 
-const ContentContainer = connect(mapStateToProps, mapDispatchToProps)(Content);
+const ContentContainer = connect(mapStateToProps, {setData, updText, fetchingAC})(Content);
 
 export default ContentContainer;

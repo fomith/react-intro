@@ -19,6 +19,9 @@ const Users = (props) => {
         follow={props.follow}
         unfollow={props.unfollow}
         key={a.id}
+        waitingFollowingAC={props.waitingFollowingAC}
+        wait={props.wait}
+        waitingEndAC={props.waitingEndAC}
       />
     );
   });

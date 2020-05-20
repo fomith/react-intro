@@ -1,6 +1,7 @@
 import React from "react";
 import a from "./Profile.module.css";
 import Loader from "../../Loader/Loader";
+import baseAvatar from "../../../image/4.png"
 
 const Profile = (props) => {
   return (
@@ -9,7 +10,7 @@ const Profile = (props) => {
       ? <Loader /> 
       : (
         <div className={a.desc}>
-          <img className={a.img} src={props.profileData.photos.large} alt="asd"></img>
+          <img className={a.img} src={!props.profileData.photos.large ? baseAvatar : props.profileData.photos.large} alt="asd"></img>
           <div>
             <p className="first_name">{props.profileData.fullName}</p>
             <p className="last_name">{props.profileData.aboutMe}</p>

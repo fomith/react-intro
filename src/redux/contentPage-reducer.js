@@ -73,7 +73,7 @@ const contentPageReducer = (state = initState, action) => {
   }
 };
 
-export const addPostActionCreator = () => ({ type: ADD_POST });
+export const setData = () => ({ type: ADD_POST });
 
 export const setUserProfile = (data) => ({ type: SET_USER_PROFILE, data });
 
@@ -81,7 +81,7 @@ export const fetchingAC = (fetching) => ({ type: FETCHING, fetching });
 
 export const auth = (data) => ({ type: AUTH, id: data.id, login: data.login, email: data.email });
 
-export const onPostChangeActionCreator = (text) => ({
+export const updText = (text) => ({
   type: CHANGE_TEXT_NEW_POST,
   message: text,
 });

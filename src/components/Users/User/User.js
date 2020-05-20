@@ -1,37 +1,25 @@
 import React from "react";
 import a from "./user.module.scss";
 import { NavLink } from "react-router-dom";
-import Axios from "axios";
+import { unFollowingUser, followingUser } from "../../../api/api";
 
 const User = (props) => {
   const followAction = () => {
-    Axios.post(
-      `https://social-network.samuraijs.com/api/1.0//follow/2`,
-      {},
-      {
-        withCredentials: true,
-        headers: {
-          "API-KEY": "a0021633-62e0-4d99-afaa-7424d154129f",
-        },
-      }
-    ).then((response) => {
-      debugger
+    props.waitingFollowingAC(props.UserId);
+    followingUser(props.UserId).then((response) => {
       if (response.data.resultCode === 0) {
         props.follow(props.UserId);
+        props.waitingEndAC(props.UserId);
       }
     });
   };
 
   const unfollowAction = () => {
-    debugger
-    Axios.delete(`https://social-network.samuraijs.com/api/1.0//follow/2`, {
-      withCredentials: true,
-      headers: {
-        "API-KEY": "a0021633-62e0-4d99-afaa-7424d154129f",
-      },
-    }).then((response) => {
+    props.waitingFollowingAC(props.UserId);
+    unFollowingUser(props.UserId).then((response) => {
       if (response.data.resultCode === 0) {
         props.unfollow(props.UserId);
+        props.waitingEndAC(props.UserId);
       }
     });
   };
@@ -68,6 +56,7 @@ const User = (props) => {
 
       {props.sub ? (
         <button
+          disabled={props.wait.some((x) => x === props.UserId)}
           className={a.unfollow + " btn btn-primary btn-sm"}
           onClick={() => unfollowAction(props.UserId)}
         >
@@ -75,6 +64,7 @@ const User = (props) => {
         </button>
       ) : (
         <button
+          disabled={props.wait.some((x) => x === props.UserId)}
           className={a.follow + "btn btn-success btn-sm"}
           onClick={() => followAction(props.UserId)}
         >
