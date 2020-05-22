@@ -1,6 +1,7 @@
 .dialogs {
   display: flex;
   width: 830px;
+  min-height: 95vh;
   margin-right: 0px;
   margin-left: auto;
   grid-template-columns: 2fr 10fr;

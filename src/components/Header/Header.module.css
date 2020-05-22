@@ -1,39 +1,47 @@
 .header {
-    display: flex;
-    justify-content: space-between;
-    background-color: #343a40;
-    position: fixed;
-    width: 1050px;
-    z-index: 2;
-    
-  }
-  
-  .header ul {
-    width: 350px;
-    display: flex;
-    justify-content: space-evenly;
-    margin: 15px 15px 15px 0px;
-  }
-  
-  .header img {
-    width: 50px;
-    height: 50px;
-    margin: 10px;
-  }
+  display: flex;
+  justify-content: space-between;
+  background-color: #343a40;
+  position: fixed;
+  width: 1050px;
+  z-index: 2;
+}
 
-  .login {
-    color: #f8f9fa;
-    transition: .3s;
-    padding: 20px;
-  }
+.header ul {
+  width: 350px;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 15px 15px 15px 0px;
+}
 
-  .acc {
-    color: #f8f9fa;
-    transition: .3s;
-    padding: 20px;
-  }
+.header img {
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+}
 
-  a.active {
-    color: #007bff;
-    transition: .5s
-  }
+.login {
+  color: #f8f9fa;
+  transition: .3s;
+  padding: 20px;
+}
+
+.logOut {
+  color: #f8f9fa;
+  transition: .3s;
+  padding: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.acc {
+  color: #f8f9fa;
+  transition: .3s;
+  padding: 20px;
+}
+
+a.active {
+  color: #007bff;
+  transition: .5s
+}

@@ -8,7 +8,7 @@ const Profile = (props) => {
   const [statusMode, setStatusModeChange] = useState(0);
 
   const statusModern = (values) => {
-    if (values.newStatusText !== props.status) {
+    if (values.newStatusText !== props.status && values.newStatusText && values.newStatusText.length > 5)  {
       props.changeCurrentStatus(values.newStatusText);
       setStatusModeChange(0);
     }

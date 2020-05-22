@@ -1,7 +1,7 @@
 import Content from "./Content";
 import { connect } from "react-redux";
 import { setData, updText, fetchingAC } from "../../redux/contentPage-reducer";
-import { NotVerification } from "../../Redirect/NotVerificationHOK";
+import { withRouter } from "react-router-dom";
 
 const mapStateToProps = (state) => {
   return {
@@ -12,6 +12,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const ContentContainer = NotVerification(connect(mapStateToProps, {setData, updText, fetchingAC})(Content));
+const ContentContainer = connect(mapStateToProps, {
+  setData,
+  updText,
+  fetchingAC,
+})(withRouter(Content));
 
 export default ContentContainer;

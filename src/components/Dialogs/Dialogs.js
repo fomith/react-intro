@@ -3,6 +3,11 @@ import a from "./Dialogs.module.css";
 import Dialog from "./Dialog/Dialog";
 import Message from "./Message/Message";
 import { Field, reduxForm } from "redux-form";
+import { TextareaCustom } from "../utilits/CustomForms/CustomForms";
+import {
+  required,
+  maxLength70,
+} from "../utilits/validationForms/ValidationForms";
 
 const Dialogs = (props) => {
   let dialogs = props.dialogsData.map((d) => (
@@ -13,7 +18,7 @@ const Dialogs = (props) => {
   ));
 
   let addPost = (data) => {
-    props.addPost(data.message);
+    props.addPost(data.message, props.authorPostID);
   };
 
   return (
@@ -21,14 +26,8 @@ const Dialogs = (props) => {
       <div className={a.dialogs_items}>{dialogs}</div>
       <div className={a.messages_item}>
         {messages}
-
         <div className={a.textareaPosition}>
           <DialogMessageRedux onSubmit={addPost} />
-          {/*   <textarea onChange={onPostChange} 
-        ref={newPostElement} 
-        value={props.newMessageText} 
-        placeholder="Введите текст"></textarea>
-        <button className={"btn btn-primary " + a.btn} onClick={addPost}>Add post</button> */}
         </div>
       </div>
     </div>
@@ -38,10 +37,12 @@ const Dialogs = (props) => {
 const DialogMessage = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
-      <Field component="textarea" name="message" placeholder="Введите текст" />
-      <button type="submit" className={"btn btn-primary " + a.btn}>
-        Add post
-      </button>
+      <Field
+        component={TextareaCustom}
+        name="message"
+        placeholder="Введите текст"
+        validate={[required, maxLength70]}
+      />
     </form>
   );
 };

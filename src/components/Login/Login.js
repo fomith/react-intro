@@ -1,7 +1,17 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
+import { TextareaCustomLogin } from "../utilits/CustomForms/CustomForms";
+import {
+  email,
+  minLength6,
+  maxLength15,
+} from "../utilits/validationForms/ValidationForms";
+import a from "./Login.module.scss";
 
-const Login = () => {
+const Login = (props) => {
+  const loginFormSubmitting = (formData) => {
+    props.authMe(formData);
+  };
   return (
     <>
       <h1>Login</h1>
@@ -11,28 +21,38 @@ const Login = () => {
 };
 
 const LoginForm = (props) => {
-  console.log(props);
   return (
     <form onSubmit={props.handleSubmit}>
       <div>
-        <Field name="firstName" component="input" type="text" placeholder="Login" />
+        <Field
+          name="email"
+          component={TextareaCustomLogin}
+          type="text"
+          placeholder="Login"
+          validate={[email]}
+        />
       </div>
 
       <div>
-        <Field name="lastname" component="input" type="text" placeholder="Password" />
+        <Field
+          name="password"
+          component={TextareaCustomLogin}
+          type="password"
+          placeholder="Password"
+          validate={[minLength6, maxLength15]}
+        />
       </div>
 
       <div>
-        <Field name="checkbox" component="input" type="checkbox" /> Remember me
+        <Field name="rememberMe" component="input" type="checkbox" /> Remember
+        me
       </div>
-
-      <button>Login</button>
+      {!props.error ? null : <span className={a.errorLoginMessage}>{props.error}</span>}
+      <div>
+        <button>Login</button>
+      </div>
     </form>
   );
-};
-
-const loginFormSubmitting = (formData) => {
-  console.warn("Submit", formData);
 };
 
 const LoginFormRedux = reduxForm({ form: "logingForm" })(LoginForm);

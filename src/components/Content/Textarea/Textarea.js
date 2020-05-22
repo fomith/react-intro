@@ -1,6 +1,8 @@
 import React from "react";
 import a from "./Textarea.module.css";
 import { Field, reduxForm } from "redux-form";
+import { TextareaCustom } from "../../utilits/CustomForms/CustomForms";
+import { maxLength70, required, minLength3 } from "../../utilits/validationForms/ValidationForms";
 
 const Textarea = (props) => {
   return (
@@ -15,13 +17,14 @@ const Textarea = (props) => {
 
 const TextareaForm = (props) => {
   return (
-    <form className={a.flex} onSubmit={props.handleSubmit}>
+    <form onSubmit={props.handleSubmit}>
       <Field
-        component="textarea"
+        type="text"
+        component={TextareaCustom}
         name="newPostElement"
         placeholder="Введите текст"
+        validate={[required, maxLength70, minLength3]}
       />
-      <button onSubmit={props.reset}  className={"btn btn-primary " + a.btn}>Add post</button>
     </form>
   );
 };

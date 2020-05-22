@@ -6,12 +6,13 @@ import {
   addCurrentStatus,
   changeCurrentStatus,
 } from "../../../redux/contentPage-reducer";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import { getUserInfoProfile, lookingStatus } from "../../../api/api";
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
     getUserInfoProfile(this.props.match.params.userid).then((response) => {
+      debugger;
       this.props.setUserProfile(response.data);
       this.props.fetchingAC(false);
       lookingStatus(this.props.match.params.userid).then((response) => {
@@ -21,17 +22,22 @@ class ProfileContainer extends React.Component {
   }
 
   render() {
-    return <Profile {...this.props} />;
+    debugger;
+    if (this.props.match.params.userid > 0) {
+      return <Profile {...this.props} />;
+    } else return <Redirect to={"/users/"} />;
   }
 }
 
 let mapStateToProps = (state) => {
   return {
     status: state.contentPage.currentStatus,
-    accId: state.contentPage.Id 
+    accId: state.contentPage.Id,
   };
 };
 
-export default connect(mapStateToProps, { setUserProfile, addCurrentStatus, changeCurrentStatus })(
-  withRouter(ProfileContainer)
-);
+export default connect(mapStateToProps, {
+  setUserProfile,
+  addCurrentStatus,
+  changeCurrentStatus,
+})(withRouter(ProfileContainer));

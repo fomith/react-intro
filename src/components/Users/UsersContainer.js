@@ -1,25 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
 import Users from "./Users";
-import {  follow,  unfollow,  newPage,  waitingFollowingAC,  waitingEndAC,  openUsersThunk,} from "../../redux/UserPage-reducer";
-import { NotVerification } from "../../Redirect/NotVerificationHOK";
+import {
+  follow,
+  unfollow,
+  newPage,
+  waitingFollowingAC,
+  waitingEndAC,
+  openUsersThunk,
+} from "../../redux/UserPage-reducer";
 
 class ContainerLocal extends React.Component {
-componentDidMount() {
-  if (this.props.data.length === 0) {
-    this.props.openUsersThunk(this.props.currentPage);
+  componentDidMount() {
+    if (this.props.data.length === 0) {
+      this.props.openUsersThunk(this.props.currentPage);
+    }
   }
-}
   render() {
     return <Users {...this.props} />;
   }
 }
-
-
-
-
-
-
 
 const mapState = (state) => {
   return {
@@ -32,15 +32,13 @@ const mapState = (state) => {
   };
 };
 
-
-
-const UsersContainer = NotVerification(connect(mapState, {
+const UsersContainer = connect(mapState, {
   follow,
   unfollow,
   newPage,
   waitingFollowingAC,
   waitingEndAC,
   openUsersThunk,
-})(ContainerLocal));
+})(ContainerLocal);
 
 export default UsersContainer;

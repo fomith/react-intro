@@ -1,4 +1,5 @@
-import { ChangeStatusAPI } from "../api/api";
+import { ChangeStatusAPI, logingAPI, authMeAPI, logOut } from "../api/api";
+import { stopSubmit } from "redux-form";
 
 const ADD_POST = "ADD-POST";
 const CHANGE_TEXT_NEW_POST = "CHANGE-TEXT-NEW-POST";
@@ -116,6 +117,37 @@ export const changeCurrentStatus = (text) => {
           type: ADD_CURRENT_STATUS,
           text: "Как бы там ни было - статус не был обновлен!!!!",
         });
+    });
+  };
+};
+
+export const authMe = (data) => {
+  return (dispatch) => {
+    logingAPI(data).then((result) => {
+      if (result.data.resultCode === 0) {
+        authMeAPI().then((response) => {
+          dispatch({
+            type: AUTH,
+            id: response.data.data.id,
+            login: response.data.data.login,
+            email: response.data.data.email,
+          });
+        });
+      } else 
+      dispatch(stopSubmit("logingForm", { _error: result.data.messages[0] }));
+    });
+  };
+};
+
+export const endSession = () => {
+  return (dispatch) => {
+    logOut().then((response) => {
+      dispatch({
+        type: AUTH,
+        id: null,
+        login: null,
+        email: null,
+      });
     });
   };
 };

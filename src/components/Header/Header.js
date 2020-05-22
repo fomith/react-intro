@@ -27,9 +27,13 @@ const Header = (props) => {
           Login
         </NavLink>
       ) : (
-        <NavLink to="/login" className={a.login}>
+        <button
+          onClick={props.endSession}
+          className={a.logOut}
+          title="Кликни, чтобы выйти из аккаунта"
+        >
           {props.Login}
-        </NavLink>
+        </button>
       )}
     </header>
   );

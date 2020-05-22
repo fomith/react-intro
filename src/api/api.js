@@ -19,7 +19,7 @@ export const getUserInfoProfile = (userid) => {
   if (userid > 1) {
     return apiBase.get(`profile/${userid}`);
   }
-  return apiBase.get(`profile/2`);
+  return apiBase.get(`profile/`);
   
 };
 
@@ -29,4 +29,5 @@ export const followingUser = (UserId) => {return apiBase1.post(`follow/${UserId}
 export const unFollowingUser = (UserId) => {return apiBase1.delete(`follow/${UserId}`)};
 export const lookingStatus = (UserId) => {return apiBase.get(`profile/status/${UserId}`)};
 export const ChangeStatusAPI = (status) => {return apiBase.put(`profile/status/`, {status})};
-export const loging = () => {return apiBase.post(`auth/login`) };
+export const logingAPI = ({email, password, rememberMe = false}) => {return apiBase.post(`auth/login`, {email, password, rememberMe}) };
+export const logOut = () => {return apiBase.delete(`auth/login`)};

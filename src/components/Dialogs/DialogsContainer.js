@@ -8,6 +8,8 @@ const mapStateToProps = (state) => {
     dialogsData: state.dialogsPage.dialogsData,
     messageData: state.dialogsPage.messageData,
     newMessageText: state.dialogsPage.newMessageText,
+    authorPostID: state.contentPage.Id
+
   };
 };
 

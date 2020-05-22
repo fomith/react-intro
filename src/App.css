@@ -33,6 +33,7 @@ main {
 .content {
   display: block;
   width: 100%;
+  min-height: 98vh;
   background-color: #6c757d;
   padding: 10px 15px;
 }

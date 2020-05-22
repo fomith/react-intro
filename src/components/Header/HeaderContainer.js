@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Header from "./Header";
-import { auth } from "../../redux/contentPage-reducer";
+import { auth, endSession } from "../../redux/contentPage-reducer";
 
 const HeaderContainer = (state) => {
   return {
@@ -10,4 +10,4 @@ const HeaderContainer = (state) => {
   };
 };
 
-export default connect(HeaderContainer, { auth })(Header);
+export default connect(HeaderContainer, { auth, endSession })(Header);
