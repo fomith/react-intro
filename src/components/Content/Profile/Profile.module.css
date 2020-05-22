@@ -4,13 +4,32 @@
 }
 
 .description img {
-  width: 100px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
-  margin-left: 10px;
   margin-top: 10px;
+  margin-right: 20px;
 }
 
 .desc {
   margin-left: 15px;
   line-height: 0.8;
+}
+
+.flex {
+  display: flex;
+}
+
+.socialLinks {
+  margin-top: 15px;
+}
+
+.currentStatus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 350px;
+  height: 44px;
+  line-height: 20px;
+  margin-bottom: 15px;
 }

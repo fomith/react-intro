@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { addPost, newText } from "../../redux/dialogPage-reducer";
 import Dialogs from "./Dialogs";
+import { NotVerification } from "../../Redirect/NotVerificationHOK";
 
 const mapStateToProps = (state) => {
   return {
@@ -10,6 +11,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const DialogsContainer = connect(mapStateToProps, { addPost, newText })(Dialogs);
+const DialogsContainer = NotVerification(connect(mapStateToProps, { addPost, newText })(Dialogs));
 
 export default DialogsContainer;

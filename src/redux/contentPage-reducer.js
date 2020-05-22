@@ -1,14 +1,19 @@
+import { ChangeStatusAPI } from "../api/api";
+
 const ADD_POST = "ADD-POST";
 const CHANGE_TEXT_NEW_POST = "CHANGE-TEXT-NEW-POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const FETCHING = "FETCHING";
 const AUTH = "AUTH";
+const ADD_CURRENT_STATUS = "ADD_CURRENT_STATUS";
 
 let initState = {
+  Auth: false,
   Id: 0,
   Login: "",
   Email: "",
-  profileData: null,
+  currentStatus: "",
+  profileData: [],
   fetching: true,
   userData: [
     { userId: 1, name: "Дмитрий ", lastName: "Фамильян", avatar: 2 },
@@ -40,9 +45,9 @@ const contentPageReducer = (state = initState, action) => {
     case ADD_POST: {
       let newPost = {
         id: state.postsData.length + 1,
-        message: state.newPostText,
+        message: action.text.newPostElement,
         LikesKount: 0,
-        userId: 1,
+        userId: state.Id,
       };
       let stateCopy = { ...state };
       stateCopy.postsData = [...state.postsData];
@@ -61,25 +66,59 @@ const contentPageReducer = (state = initState, action) => {
     case FETCHING:
       return { ...state, fetching: action.fetching };
 
-    case AUTH:
+    case ADD_CURRENT_STATUS:
+      return { ...state, currentStatus: action.text };
+
+    case AUTH: {
+      let AuthStatus = false;
+      if (action.id > 0) {
+        AuthStatus = true;
+      }
       return {
         ...state,
         Id: action.id,
         Login: action.login,
         Email: action.email,
+        Auth: AuthStatus,
       };
+    }
+
     default:
       return state;
   }
 };
 
-export const setData = () => ({ type: ADD_POST });
+export const setData = (text) => ({ type: ADD_POST, text });
 
 export const setUserProfile = (data) => ({ type: SET_USER_PROFILE, data });
 
 export const fetchingAC = (fetching) => ({ type: FETCHING, fetching });
 
-export const auth = (data) => ({ type: AUTH, id: data.id, login: data.login, email: data.email });
+export const auth = (data) => ({
+  type: AUTH,
+  id: data.id,
+  login: data.login,
+  email: data.email,
+});
+
+export const addCurrentStatus = (text) => ({ type: ADD_CURRENT_STATUS, text });
+
+export const changeCurrentStatus = (text) => {
+  return (dispatch) => {
+    ChangeStatusAPI(text).then((response) => {
+      if (response.data.resultCode === 0) {
+        dispatch({
+          type: ADD_CURRENT_STATUS,
+          text,
+        });
+      } else
+        dispatch({
+          type: ADD_CURRENT_STATUS,
+          text: "Как бы там ни было - статус не был обновлен!!!!",
+        });
+    });
+  };
+};
 
 export const updText = (text) => ({
   type: CHANGE_TEXT_NEW_POST,

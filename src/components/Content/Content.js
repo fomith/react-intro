@@ -6,7 +6,7 @@ import ProfileContainer from './Profile/ProfileContainer';
 
 const Content = (props) => {
   let postsElement = props.postsData.map(p => {
-    return  <Post message={p.message} LikesKount={p.LikesKount} avatar={p.userId} key={p.id}/>
+    return  <Post message={p.message} LikesKount={p.LikesKount} avatar={p.userId} key={p.id} />
   });
   return (
     <div>

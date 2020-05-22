@@ -1,53 +1,32 @@
 import Axios from "axios";
 
+const apiBase = Axios.create({
+  baseURL: "https://social-network.samuraijs.com/api/1.0/",
+  withCredentials: true,
+  headers: {
+    "API-KEY": "4e3741cd-d116-4586-83ab-451c4769bf3c",
+  },
+});
+const apiBase1 = Axios.create({
+  baseURL: "https://1social-network.samuraijs.com/api/1.0/",
+  withCredentials: true,
+  headers: {
+    "API-KEY": "4e3741cd-d116-4586-83ab-451c4769bf3c",
+  },
+});
+
 export const getUserInfoProfile = (userid) => {
-  let localUserId = userid;
-  if (localUserId < 2 || localUserId === undefined) {
-    localUserId = 2;
+  if (userid > 1) {
+    return apiBase.get(`profile/${userid}`);
   }
-  return Axios.get(
-    `https://social-network.samuraijs.com/api/1.0/profile/${userid}`,
-    {
-      withCredentials: true,
-    }
-  );
+  return apiBase.get(`profile/2`);
+  
 };
 
-export const authMeAPI = () => {
-  return Axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-    withCredentials: true,
-  });
-};
-
-export const openUsers = (page) => {
-  return Axios.get(
-    `https://social-network.samuraijs.com/api/1.0/users?page=${page}`,
-    {
-      withCredentials: true,
-    }
-  );
-};
-
-export const followingUser = (UserId) => {
-  return Axios.post(
-    `https://1social-network.samuraijs.com/api/1.0/follow/${UserId}`,
-    {},
-    {
-      withCredentials: true,
-      headers: {
-        "API-KEY": "659b1504-69db-4c99-b3b8-3bafd59cf7ce",
-      },
-    }
-  );
-};
-export const unFollowingUser = (UserId) => {
-  Axios.delete(
-    `https://1social-network.samuraijs.com/api/1.0/follow/${UserId}`,
-    {
-      withCredentials: true,
-      headers: {
-        "API-KEY": "659b1504-69db-4c99-b3b8-3bafd59cf7ce",
-      },
-    }
-  );
-};
+export const authMeAPI = () => {return apiBase.get(`auth/me`)};
+export const openUsers = (page) => {return apiBase.get(`users?page=${page}`)};
+export const followingUser = (UserId) => {return apiBase1.post(`follow/${UserId}`)};
+export const unFollowingUser = (UserId) => {return apiBase1.delete(`follow/${UserId}`)};
+export const lookingStatus = (UserId) => {return apiBase.get(`profile/status/${UserId}`)};
+export const ChangeStatusAPI = (status) => {return apiBase.put(`profile/status/`, {status})};
+export const loging = () => {return apiBase.post(`auth/login`) };

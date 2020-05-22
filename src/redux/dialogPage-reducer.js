@@ -32,7 +32,7 @@ const dialogPageReducer = (state = initState, action) => {
       let newMessage = {
         postId: state.messageData.length + 1,
         id: 5,
-        message: state.newMessageText,
+        message: action.message,
       };
       let stateCopy = { ...state };
       stateCopy.messageData = [...state.messageData];
@@ -50,7 +50,7 @@ const dialogPageReducer = (state = initState, action) => {
   }
 };
 
-export const addPost = () => ({ type: ADD_MESSAGE });
+export const addPost = (message) => ({ type: ADD_MESSAGE, message });
 
 export const newText = (text) => ({
   type: CHANGE_TEXT_MESSAGE_POST,

@@ -3,7 +3,6 @@ import User from "./User/User";
 import ReactPaginate from "react-paginate";
 import a from "./User/user.module.scss";
 import Loader from "../Loader/Loader";
-import { openUsers } from "../../api/api";
 
 const Users = (props) => {
   const UsersMap = props.data.map((a) => {
@@ -26,21 +25,8 @@ const Users = (props) => {
     );
   });
 
-  if (props.data.length === 0) {
-    props.fetchingAC(true);
-    openUsers(props.currentPage).then((response) => {
-      props.addusers(response);
-      props.fetchingAC(false);
-    });
-  }
-
   let openPage = (selectedPage) => {
-    props.newPage(selectedPage.selected + 1);
-    props.fetchingAC(true);
-    openUsers(selectedPage.selected + 1).then((response) => {
-      props.addusers(response);
-      props.fetchingAC(false);
-    });
+    props.openUsersThunk(selectedPage.selected + 1);
   };
 
   let pageCount = Math.ceil(props.totalCount / 10);

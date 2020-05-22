@@ -1,9 +1,27 @@
+import React from "react";
 import { connect } from "react-redux";
 import Users from "./Users";
-import { follow, unfollow, addusers, newPage, fetchingAC, waitingFollowingAC, waitingEndAC } from "../../redux/UserPage-reducer";
+import {  follow,  unfollow,  newPage,  waitingFollowingAC,  waitingEndAC,  openUsersThunk,} from "../../redux/UserPage-reducer";
+import { NotVerification } from "../../Redirect/NotVerificationHOK";
+
+class ContainerLocal extends React.Component {
+componentDidMount() {
+  if (this.props.data.length === 0) {
+    this.props.openUsersThunk(this.props.currentPage);
+  }
+}
+  render() {
+    return <Users {...this.props} />;
+  }
+}
+
+
+
+
+
+
 
 const mapState = (state) => {
-  window.state = state;
   return {
     data: state.usersPage.userData,
     totalCount: state.usersPage.totalCount,
@@ -14,6 +32,15 @@ const mapState = (state) => {
   };
 };
 
-const UsersContainer = connect(mapState, {follow, unfollow, addusers, newPage, fetchingAC, waitingFollowingAC, waitingEndAC})(Users);
+
+
+const UsersContainer = NotVerification(connect(mapState, {
+  follow,
+  unfollow,
+  newPage,
+  waitingFollowingAC,
+  waitingEndAC,
+  openUsersThunk,
+})(ContainerLocal));
 
 export default UsersContainer;

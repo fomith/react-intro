@@ -1,3 +1,5 @@
+import { openUsers } from "../api/api";
+
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const ADDUSERS = "ADDUSERS";
@@ -59,13 +61,18 @@ const UserPageReducer = (state = initState, action) => {
       return stateCopy;
     }
     case WAIT: {
-      let stateCopy = { ...state, waitingFollowing: [...state.waitingFollowing]};
+      let stateCopy = {
+        ...state,
+        waitingFollowing: [...state.waitingFollowing],
+      };
       stateCopy.waitingFollowing.push(action.id);
       return stateCopy;
     }
     case WAIT_END: {
       let stateCopy = { ...state };
-      stateCopy.waitingFollowing = stateCopy.waitingFollowing.filter(x => x !== action.id)
+      stateCopy.waitingFollowing = stateCopy.waitingFollowing.filter(
+        (x) => x !== action.id
+      );
       return stateCopy;
     }
     default:
@@ -103,4 +110,16 @@ export const waitingEndAC = (text) => ({
   type: WAIT_END,
   id: text,
 });
+
+export const openUsersThunk = (currentPage) => {
+  return (dispatch) => {
+    dispatch(fetchingAC(true));
+    openUsers(currentPage).then((response) => {
+      dispatch(addusers(response));
+      dispatch(fetchingAC(false));
+      dispatch(newPage(currentPage))
+    });
+  };
+};
+
 export default UserPageReducer;
