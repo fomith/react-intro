@@ -8,6 +8,7 @@ const mapStateToProps = (state) => {
     postsData: state.contentPage.postsData,
     newText: state.contentPage.newPostText,
     profileData: state.contentPage.profileData,
+    profileDataMe: state.contentPage.profileDataMe,
     fetching: state.contentPage.fetching,
   };
 };

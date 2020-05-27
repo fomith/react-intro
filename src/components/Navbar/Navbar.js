@@ -8,7 +8,7 @@ const Navbar = (props) => {
       <nav className={a.left + " " + a.top + " " + a.right}>
         <ul>
           <li>
-            <NavLink to={`/profile/` + props.id } activeClassName={a.active}>
+            <NavLink to={"/profile/" + props.id } activeClassName={a.active}>
               Profile
             </NavLink>
           </li>

@@ -45,3 +45,20 @@ a.active {
   color: #007bff;
   transition: .5s
 }
+
+.newMessage {
+  width: 30px;
+  height: 20px;
+  background-color: black;
+  color: white;
+}
+
+.positionHeaderBlock { 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.new {
+  background-color: green;
+}

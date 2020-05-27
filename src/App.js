@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Route } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Setting from "./components/Setting/Setting";
@@ -10,25 +10,48 @@ import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
 import LoginContainer from "./components/Login/LoginContainer";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { autorizedProccess } from "./redux/contentPage-reducer";
+import Loader from "./components/Loader/Loader";
 
-function App(props) {
-  return (
-    <div className="app-wrapper">
-      <HeaderContainer />
-      <main>
-        <NavbarContainer />
-        <content className="content top">
-          <Route path="/profile/:userid?" render={() => <ContentContainer />} />
-          <Route path="/dialogs" render={() => <DialogsContainer />} />
-          <Route path="/users" render={() => <UsersContainer />} />
-          <Route path="/login" render={() => <LoginContainer />} />
-          <Route path="/news" render={() => <News />} />
-          <Route path="/music" render={() => <Music />} />
-          <Route path="/setting" render={() => <Setting />} />
-        </content>
-      </main>
-    </div>
-  );
+class App extends React.Component {
+  componentDidMount() {
+    if (!this.props.AuthSync) this.props.autorizedProccess();
+  }
+  render() {
+    if (!this.props.AuthSync) {
+      return <Loader />;
+    } else {
+      return (
+        <div className="app-wrapper">
+          <HeaderContainer />
+          <main>
+            <NavbarContainer />
+            <content className="content top">
+              <Route
+                path="/profile/:userid?"
+                render={() => <ContentContainer />}
+              />
+              <Route path="/dialogs/:userid?" render={() => <DialogsContainer />} />
+              <Route path="/users" render={() => <UsersContainer />} />
+              <Route path="/login" render={() => <LoginContainer />} />
+              <Route path="/news" render={() => <News />} />
+              <Route path="/music" render={() => <Music />} />
+              <Route path="/setting" render={() => <Setting />} />
+            </content>
+          </main>
+        </div>
+      );
+    }
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  AuthSync: state.contentPage.AuthSync,
+});
+
+export default compose(
+  withRouter,
+  connect(mapStateToProps, { autorizedProccess })
+)(App);

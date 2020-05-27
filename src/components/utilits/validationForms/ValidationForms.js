@@ -14,5 +14,5 @@ export const maxLength15 = maxLength(15);
 
 export const minLength = (min) => (value) =>
   value && value.length < min ? `Допустимая длинна не менее ${min} символов` : undefined;
-export const minLength6 = minLength(6);
+export const minLength4 = minLength(4);
 export const minLength3 = minLength(3);

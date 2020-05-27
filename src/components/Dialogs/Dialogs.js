@@ -8,13 +8,27 @@ import {
   required,
   maxLength70,
 } from "../utilits/validationForms/ValidationForms";
+import { withRouter } from "react-router-dom";
 
 const Dialogs = (props) => {
-  let dialogs = props.dialogsData.map((d) => (
-    <Dialog name={d.name} id={d.id} key={d.id} />
-  ));
+  if (props.dialogsData.length === 0) {
+    props.openDialogData();
+  }
+
+  if (props.match.params.userid && props.messageData.length === 0) {
+    props.openMessageData(props.match.params.userid);
+  }
+
+  let dialogs = "";
+  if (props.dialogsData.length > 0) {
+    dialogs = props.dialogsData.map((d) => (
+      <Dialog name={d.userName} id={d.id} photos={d.photos.small} newMessagesCount={d.newMessagesCount} key={d.id} />
+    ));
+  }
+
+   // TODO Добавляем сообщения
   let messages = props.messageData.map((m) => (
-    <Message message={m.message} id={m.id} key={m.postId} />
+    <Message authorPostID={props.authorPostID} profileData={props.profileData} Author={props.dialogsData.filter(x => m.senderId === x.id )} message={m.body} senderId={m.senderId} key={m.id} />
   ));
 
   let addPost = (data) => {
@@ -23,7 +37,9 @@ const Dialogs = (props) => {
 
   return (
     <div className={a.dialogs}>
-      <div className={a.dialogs_items}>{dialogs}</div>
+      <div className={a.dialogs_items}>
+        {props.dialogsData ? dialogs : null}
+      </div>
       <div className={a.messages_item}>
         {messages}
         <div className={a.textareaPosition}>
@@ -51,4 +67,4 @@ const DialogMessageRedux = reduxForm({ form: "dialogMessageForm" })(
   DialogMessage
 );
 
-export default Dialogs;
+export default withRouter(Dialogs);

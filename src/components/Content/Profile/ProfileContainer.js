@@ -2,27 +2,24 @@ import React from "react";
 import Profile from "./Profile";
 import { connect } from "react-redux";
 import {
-  setUserProfile,
-  addCurrentStatus,
   changeCurrentStatus,
+  getUser,
 } from "../../../redux/contentPage-reducer";
 import { withRouter, Redirect } from "react-router-dom";
-import { getUserInfoProfile, lookingStatus } from "../../../api/api";
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
-    getUserInfoProfile(this.props.match.params.userid).then((response) => {
-      debugger;
-      this.props.setUserProfile(response.data);
-      this.props.fetchingAC(false);
-      lookingStatus(this.props.match.params.userid).then((response) => {
-        this.props.addCurrentStatus(response.data);
-      });
-    });
+    this.props.getUser(this.props.match.params.userid);
+  }
+  componentDidUpdate() {
+    if (
+      this.props.profileData.userId !== parseInt(this.props.match.params.userid)
+    ) {
+      this.props.getUser(this.props.match.params.userid);
+    }
   }
 
   render() {
-    debugger;
     if (this.props.match.params.userid > 0) {
       return <Profile {...this.props} />;
     } else return <Redirect to={"/users/"} />;
@@ -37,7 +34,6 @@ let mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  setUserProfile,
-  addCurrentStatus,
   changeCurrentStatus,
+  getUser,
 })(withRouter(ProfileContainer));

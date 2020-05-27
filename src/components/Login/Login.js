@@ -3,7 +3,7 @@ import { Field, reduxForm } from "redux-form";
 import { TextareaCustomLogin } from "../utilits/CustomForms/CustomForms";
 import {
   email,
-  minLength6,
+  minLength4,
   maxLength15,
 } from "../utilits/validationForms/ValidationForms";
 import a from "./Login.module.scss";
@@ -39,7 +39,7 @@ const LoginForm = (props) => {
           component={TextareaCustomLogin}
           type="password"
           placeholder="Password"
-          validate={[minLength6, maxLength15]}
+          validate={[minLength4, maxLength15]}
         />
       </div>
 

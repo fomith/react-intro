@@ -1,28 +1,13 @@
+import { openedDialogs, openedDialogsChatting } from "../api/api";
+
 const ADD_MESSAGE = "ADD-MESSAGE";
 const CHANGE_TEXT_MESSAGE_POST = "CHANGE-TEXT-MESSAGE-POST";
+const ADD_DIALOGS_BD = "ADD_DIALOGS_BD";
+const ADD_MESSAGES_BD = "ADD_MESSAGES_BD";
 
 let initState = {
-  dialogsData: [
-    { id: 1, name: "Димыч" },
-    { id: 2, name: "Линыч" },
-    { id: 3, name: "Сержич" },
-    { id: 4, name: "Сашич" },
-    { id: 5, name: "Мишич" },
-    { id: 6, name: "Бусич" },
-  ],
-  messageData: [
-    { postId: 1, id: 2, message: "GПривет" },
-    { postId: 2, id: 2, message: "Как дела?" },
-    {
-      postId: 3,
-      id: 1,
-      message:
-        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis asperiores iste aliquid veniam sed nihil provident dignissimos cum nam? Dignissimos adipisci ratione sit odio quasi deserunt doloremque corrupti soluta nesciunt, eum provident maxime iste voluptate totam. Natus eum nemo, aliquid asperiores, error harum voluptates consequuntur, cupiditate aliquam non sit officiis incidunt ullam sint ut! Eius quidem quis nulla provident ab sint ducimus molestias facere possimus cum aliquam sit, asperiores cumque hic suscipit obcaecati autem assumenda. Placeat vero fuga quia inventore totam, voluptatem voluptatum, nam quis laudantium vel aspernatur quas dolorum pariatur recusandae non. Tenetur, ipsum omnis accusantium ullam voluptatum debitis?",
-    },
-    { postId: 4, id: 2, message: "Йоу" },
-    { postId: 5, id: 2, message: "Йоу" },
-    { postId: 6, id: 2, message: "Йоу" },
-  ],
+  dialogsData: [],
+  messageData: [],
   newMessageText: "",
 };
 
@@ -30,9 +15,14 @@ const dialogPageReducer = (state = initState, action) => {
   switch (action.type) {
     case ADD_MESSAGE: {
       let newMessage = {
-        postId: state.messageData.length + 1,
-        id: action.authorID,
-        message: action.message,
+        id: state.messageData.length + 1,
+        body: action.message,
+        translatedBody: null,
+        addedAt: "2020-05-14T09:44:05.853",
+        senderId: action.authorID,
+        senderName: "Matthew",
+        recipientId: 8061,
+        viewed: true,
       };
       let stateCopy = { ...state };
       stateCopy.messageData = [...state.messageData];
@@ -45,16 +35,57 @@ const dialogPageReducer = (state = initState, action) => {
       stateCopy.newMessageText = action.message;
       return stateCopy;
     }
+    case ADD_DIALOGS_BD: {
+      return {
+        ...state,
+        dialogsData: action.data,
+      };
+    }
+    case ADD_MESSAGES_BD: {
+      return {
+        ...state,
+        messageData: action.data,
+      };
+    }
     default:
       return state;
   }
 };
 
-export const addPost = (message, authorID) => ({ type: ADD_MESSAGE, message, authorID });
+export const addPost = (message, authorID) => ({
+  type: ADD_MESSAGE,
+  message,
+  authorID,
+});
 
 export const newText = (text) => ({
   type: CHANGE_TEXT_MESSAGE_POST,
   message: text,
 });
+export const openDialogData = () => {
+  return (dispatch) => {
+    openedDialogs().then((response) => {
+      if (response.data.length > 0) {
+        dispatch({
+          type: ADD_DIALOGS_BD,
+          data: response.data,
+        });
+      }
+    });
+  };
+};
+
+export const openMessageData = (id) => {
+  return (dispatch) => {
+    openedDialogsChatting(id).then((response) => {
+      if (response.data.totalCount > 0) {
+        dispatch({
+          type: ADD_MESSAGES_BD,
+          data: response.data.items,
+        });
+      }
+    });
+  };
+};
 
 export default dialogPageReducer;

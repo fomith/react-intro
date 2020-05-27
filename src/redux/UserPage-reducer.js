@@ -44,11 +44,12 @@ const UserPageReducer = (state = initState, action) => {
       return stateCopy;
     }
     case ADDUSERS: {
-      let stateCopy = { ...state };
-      stateCopy.userData = action.id.data.items;
-      stateCopy.totalCount = action.id.data.totalCount;
-      stateCopy.userCountPage = 10;
-      return stateCopy;
+      return { 
+        ...state,
+        userData: action.id.data.items,
+        totalCount: action.id.data.totalCount,
+        userCountPage: 10,
+      };
     }
     case NEW_PAGE: {
       let stateCopy = { ...state };

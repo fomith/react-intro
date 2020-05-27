@@ -1,20 +1,11 @@
 import React from "react";
 import a from "../Header/Header.module.css";
 import { NavLink } from "react-router-dom";
-import { authMeAPI } from "../../api/api";
 
 const Header = (props) => {
-  authMeAPI()
-    .then((response) => {
-      return {
-        id: response.data.data.id,
-        login: response.data.data.login,
-        email: response.data.data.email,
-      };
-    })
-    .then((data) => {
-      props.auth(data);
-    });
+  if (props.Id > 1) {
+    props.newMessageCount();
+  }
   return (
     <header className={a.header}>
       <img
@@ -27,13 +18,24 @@ const Header = (props) => {
           Login
         </NavLink>
       ) : (
-        <button
-          onClick={props.endSession}
-          className={a.logOut}
-          title="Кликни, чтобы выйти из аккаунта"
-        >
-          {props.Login}
-        </button>
+        <div className={a.positionHeaderBlock}>
+          <span
+            className={
+              props.newMessages !== 0
+                ? a.new + " " + a.newMessage + " " + a.positionHeaderBlock
+                : a.newMessage + " " + a.positionHeaderBlock
+            }
+          >
+            {props.newMessages}
+          </span>
+          <button
+            onClick={props.endSession}
+            className={a.logOut}
+            title="Кликни, чтобы выйти из аккаунта"
+          >
+            {props.Login}
+          </button>
+        </div>
       )}
     </header>
   );

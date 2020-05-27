@@ -31,3 +31,13 @@ export const lookingStatus = (UserId) => {return apiBase.get(`profile/status/${U
 export const ChangeStatusAPI = (status) => {return apiBase.put(`profile/status/`, {status})};
 export const logingAPI = ({email, password, rememberMe = false}) => {return apiBase.post(`auth/login`, {email, password, rememberMe}) };
 export const logOut = () => {return apiBase.delete(`auth/login`)};
+
+
+// TODO  * API for work dialogs 
+export const NewMessageIcon = () => {return apiBase.get(`dialogs/messages/new/count`)};
+
+// TODO  * Opened dialogs
+export const openedDialogs = () => {return apiBase.get(`dialogs/`)};
+
+// TODO  * start chatting, refresh your companion so that he was on top
+export const openedDialogsChatting = (id) => {return apiBase.get(`/dialogs/${id}/messages/`)};

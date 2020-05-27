@@ -1,4 +1,12 @@
-import { ChangeStatusAPI, logingAPI, authMeAPI, logOut } from "../api/api";
+import {
+  ChangeStatusAPI,
+  logingAPI,
+  authMeAPI,
+  logOut,
+  NewMessageIcon,
+  lookingStatus,
+  getUserInfoProfile,
+} from "../api/api";
 import { stopSubmit } from "redux-form";
 
 const ADD_POST = "ADD-POST";
@@ -7,27 +15,23 @@ const SET_USER_PROFILE = "SET_USER_PROFILE";
 const FETCHING = "FETCHING";
 const AUTH = "AUTH";
 const ADD_CURRENT_STATUS = "ADD_CURRENT_STATUS";
+const MESSAGE_COUNT = "MESSAGE_COUNT";
 
 let initState = {
+  newMessageCount: null,
+  AuthSync: false,
   Auth: false,
   Id: 0,
   Login: "",
   Email: "",
   currentStatus: "",
+  profileDataMe: [],
   profileData: [],
   fetching: true,
-  userData: [
-    { userId: 1, name: "Дмитрий ", lastName: "Фамильян", avatar: 2 },
-    { userId: 2, name: "Ваня", lastName: "Куцен", avatar: 1 },
-    { userId: 3, name: "Валя", lastName: "Икар", avatar: 1 },
-    { userId: 4, name: "Зина", lastName: "Макар", avatar: 1 },
-    { userId: 5, name: "GПривет", lastName: "ЙоЙё", avatar: 1 },
-    { userId: 6, name: "asdasdasdasd", lastName: "asd", avatar: 1 },
-  ],
+  userData: [{ userId: 1, name: "Дмитрий ", lastName: "Фамильян", avatar: 2 }],
   postsData: [
     { id: 1, message: "GПsdривет ", LikesKount: 17, userId: 2 },
-    { id: 2, message: "Как дела?", LikesKount: 0, userId: 4 },
-    { id: 3, message: "Тестовая запись", LikesKount: 22, userId: 1 },
+
     {
       id: 4,
       message:
@@ -61,8 +65,29 @@ const contentPageReducer = (state = initState, action) => {
       stateCopy.newPostText = action.message;
       return stateCopy;
     }
-    case SET_USER_PROFILE:
-      return { ...state, profileData: action.data };
+
+    // TODO Выборка
+    case SET_USER_PROFILE: {
+      if (state.Id === action.data.userId && state.profileDataMe.length === 0) {
+        return {
+          ...state,
+          profileData: action.data,
+          profileDataMe: action.data,
+          fetching: false,
+          currentStatus: action.status,
+        };
+      } else {
+        return {
+          ...state,
+          profileData: action.data,
+          fetching: false,
+          currentStatus: action.status,
+        };
+      }
+    }
+
+    case MESSAGE_COUNT:
+      return { ...state, newMessageCount: action.count };
 
     case FETCHING:
       return { ...state, fetching: action.fetching };
@@ -75,12 +100,18 @@ const contentPageReducer = (state = initState, action) => {
       if (action.id > 0) {
         AuthStatus = true;
       }
+      let statusProfile = "";
+      if (statusProfile !== "") {
+        statusProfile = action.status;
+      }
       return {
         ...state,
         Id: action.id,
         Login: action.login,
         Email: action.email,
         Auth: AuthStatus,
+        currentStatus: statusProfile,
+        AuthSync: true,
       };
     }
 
@@ -91,7 +122,25 @@ const contentPageReducer = (state = initState, action) => {
 
 export const setData = (text) => ({ type: ADD_POST, text });
 
-export const setUserProfile = (data) => ({ type: SET_USER_PROFILE, data });
+// TODO get user
+
+export const getUser = (data) => {
+  return (dispatch) => {
+    getUserInfoProfile(data)
+      .then((response) => {
+        lookingStatus(data).then((resp) => {
+          dispatch({
+            type: SET_USER_PROFILE,
+            data: response.data,
+            status: resp.data,
+          });
+        });
+      })
+      .then(() => {
+        return true;
+      });
+  };
+};
 
 export const fetchingAC = (fetching) => ({ type: FETCHING, fetching });
 
@@ -133,8 +182,8 @@ export const authMe = (data) => {
             email: response.data.data.email,
           });
         });
-      } else 
-      dispatch(stopSubmit("logingForm", { _error: result.data.messages[0] }));
+      } else
+        dispatch(stopSubmit("logingForm", { _error: result.data.messages[0] }));
     });
   };
 };
@@ -156,5 +205,43 @@ export const updText = (text) => ({
   type: CHANGE_TEXT_NEW_POST,
   message: text,
 });
+
+export const autorizedProccess = () => {
+  return (dispatch) => {
+    let AuthInfo = "null";
+    let statusInfo = "null";
+    authMeAPI()
+      .then((response) => {
+        AuthInfo = response.data.data;
+        return response;
+      })
+      .then((response) => {
+        lookingStatus(response.data.data.id)
+          .then(({ data }) => {
+            statusInfo = data;
+          })
+          .then(() => {
+            dispatch({
+              type: AUTH,
+              id: AuthInfo.id,
+              login: AuthInfo.login,
+              email: AuthInfo.email,
+              status: statusInfo,
+            });
+          });
+      });
+  };
+};
+
+export const newMessageCount = () => {
+  return (dispatch) => {
+    NewMessageIcon().then((response) => {
+      return dispatch({
+        type: MESSAGE_COUNT,
+        count: response.data,
+      });
+    });
+  };
+};
 
 export default contentPageReducer;

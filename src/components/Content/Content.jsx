@@ -4,8 +4,8 @@ import Textarea from "./Textarea/Textarea";
 import Post from "./Posts/Post";
 import ProfileContainer from "./Profile/ProfileContainer";
 
-const Content = (props) => {
-
+const Content = React.memo((props) => {
+  console.log("Render Content")
   let postsElement = props.postsData.map((p) => {
     return (
       <Post
@@ -32,6 +32,6 @@ const Content = (props) => {
       {postsElement}
     </div>
   );
-};
+});
 
 export default Content;
