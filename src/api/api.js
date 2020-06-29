@@ -41,3 +41,11 @@ export const openedDialogs = () => {return apiBase.get(`dialogs/`)};
 
 // TODO  * start chatting, refresh your companion so that he was on top
 export const openedDialogsChatting = (id) => {return apiBase.get(`/dialogs/${id}/messages/`)};
+
+// TODO  * send message to following friend
+export const sendMessage = (body, id) => {return apiBase.post(`dialogs/${id}/messages`, {body})};
+
+// TODO  * vived or no my message
+export const vivedOrNo = ( messageId ) => {return apiBase.get(`dialogs/messages/${messageId}/viewed`)};
+
+

@@ -8,7 +8,11 @@ const Profile = (props) => {
   const [statusMode, setStatusModeChange] = useState(0);
 
   const statusModern = (values) => {
-    if (values.newStatusText !== props.status && values.newStatusText && values.newStatusText.length > 5)  {
+    if (
+      values.newStatusText !== props.status &&
+      values.newStatusText &&
+      values.newStatusText.length > 5
+    ) {
       props.changeCurrentStatus(values.newStatusText);
       setStatusModeChange(0);
     }
@@ -52,7 +56,7 @@ const Profile = (props) => {
               <p className="first_name">{props.profileData.fullName}</p>
 
               <div>
-                {statusMode === 0 ? (
+                {statusMode === 0 || statusMode !== 1 ? (
                   !props.status ? (
                     <span
                       onClick={() =>
@@ -87,6 +91,23 @@ const Profile = (props) => {
             </div>
           </div>
           <div className={a.socialLinks}>
+            <div>
+              {statusMode === 0 || statusMode !== 2 ? (
+                <span
+                  onClick={() =>
+                    props.accId === props.profileData.userId
+                      ? setStatusModeChange(2)
+                      : null
+                  }
+                  className="badge badge-primary"
+                >
+                  {props.profileData.contacts.facebook + " Link"}
+                </span>
+              ) : (
+                <StatusFormRedux onSubmit={statusModern} />
+              )}
+            </div>
+
             <a
               className="badge badge-primary"
               href={"https://" + props.profileData.contacts.facebook}

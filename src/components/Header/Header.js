@@ -5,6 +5,9 @@ import { NavLink } from "react-router-dom";
 const Header = (props) => {
   if (props.Id > 1) {
     props.newMessageCount();
+    setInterval(() => {
+      props.newMessageCount();
+    }, 30000);
   }
   return (
     <header className={a.header}>

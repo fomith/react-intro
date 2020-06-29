@@ -86,8 +86,11 @@ const contentPageReducer = (state = initState, action) => {
       }
     }
 
-    case MESSAGE_COUNT:
-      return { ...state, newMessageCount: action.count };
+    case MESSAGE_COUNT: {
+      if (state.newMessageCount !== action.count) {
+        return { ...state, newMessageCount: action.count };
+      } else return { ...state };
+    }
 
     case FETCHING:
       return { ...state, fetching: action.fetching };
@@ -121,9 +124,6 @@ const contentPageReducer = (state = initState, action) => {
 };
 
 export const setData = (text) => ({ type: ADD_POST, text });
-
-// TODO get user
-
 export const getUser = (data) => {
   return (dispatch) => {
     getUserInfoProfile(data)

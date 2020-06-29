@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import a from "./Message.module.css";
 import baseAvatar from "../../../image/4.png";
-import Loader from "../../Loader/Loader";
+import { vivedOrNo } from "../../../api/api";
 
 const Message = (props) => {
+  const [vived, setVived] = useState(false);
 
-  if (props.Author.length === 0) {
-    return <Loader />;
+  if (props.senderId === props.authorPostID) {
+    vivedOrNo(props.messageId).then((response) => {
+      setVived(response.data);
+    });
+
+    return (
+      <div className={a.message}>
+        <p className={vived ? a.messageText : a.messageTextNew}>
+          {props.message}
+        </p>
+        <img className={a.avatar} src={baseAvatar} alt="YOU"></img>
+      </div>
+    );
   } else {
-
-    if (props.authorPostID === props.senderId) {
-
-    }
-
-
-
     return (
       <div className={a.message}>
         <img

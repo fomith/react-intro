@@ -11,10 +11,10 @@ export const NotVerification = (Component) => {
   }
 
   let mapState = (state) => {
-      return {AuthStatus: state.contentPage.Auth}
-  }
+    return { AuthStatus: state.contentPage.Auth };
+  };
 
- const RedirectConnect = connect(mapState, {}) (RedirectComponent)
+  const RedirectConnect = connect(mapState, {})(RedirectComponent);
 
   return RedirectConnect;
 };

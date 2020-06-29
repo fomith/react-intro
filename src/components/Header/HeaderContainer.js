@@ -2,6 +2,8 @@ import { connect } from "react-redux";
 import Header from "./Header";
 import { endSession, newMessageCount } from "../../redux/contentPage-reducer";
 
+
+
 const HeaderContainer = (state) => {
   return {
     Login: state.contentPage.Login,

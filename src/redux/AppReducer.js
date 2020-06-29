@@ -1,16 +1,12 @@
 const FOLLOW = "FOLLOW";
 
-
 let initState = {
   userData: [],
   fetching: true,
-
 };
 
 const appReducer = (state = initState, action) => {
   switch (action.type) {
-
-    
     case FOLLOW: {
       let stateCopy = { ...state };
       stateCopy.userData = [...state.userData];
@@ -23,7 +19,7 @@ const appReducer = (state = initState, action) => {
       });
       return stateCopy;
     }
-  
+
     default:
       return state;
   }
@@ -37,9 +33,6 @@ export const initializedWait = (text) => ({
   type: FOLLOW,
   id: text,
 });
-
-
-
 
 /* export const openUsersThunk = (currentPage) => {
   return (dispatch) => {

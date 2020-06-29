@@ -1,4 +1,4 @@
-import { openedDialogs, openedDialogsChatting } from "../api/api";
+import { openedDialogs, openedDialogsChatting, sendMessage } from "../api/api";
 
 const ADD_MESSAGE = "ADD-MESSAGE";
 const CHANGE_TEXT_MESSAGE_POST = "CHANGE-TEXT-MESSAGE-POST";
@@ -14,19 +14,10 @@ let initState = {
 const dialogPageReducer = (state = initState, action) => {
   switch (action.type) {
     case ADD_MESSAGE: {
-      let newMessage = {
-        id: state.messageData.length + 1,
-        body: action.message,
-        translatedBody: null,
-        addedAt: "2020-05-14T09:44:05.853",
-        senderId: action.authorID,
-        senderName: "Matthew",
-        recipientId: 8061,
-        viewed: true,
-      };
+      debugger
       let stateCopy = { ...state };
       stateCopy.messageData = [...state.messageData];
-      stateCopy.messageData.push(newMessage);
+      stateCopy.messageData.push(action.data.message);
       stateCopy.newMessageText = "";
       return stateCopy;
     }
@@ -52,11 +43,19 @@ const dialogPageReducer = (state = initState, action) => {
   }
 };
 
-export const addPost = (message, authorID) => ({
-  type: ADD_MESSAGE,
-  message,
-  authorID,
-});
+export const addPost = (message, authorID) => {
+  return (dispatch) => {
+    sendMessage(message, authorID).then((response) => {
+      debugger
+      if (response.data.resultCode === 0) {
+        dispatch({
+          type: ADD_MESSAGE,
+          data: response.data.data,
+        });
+      } 
+    });
+  };
+};
 
 export const newText = (text) => ({
   type: CHANGE_TEXT_MESSAGE_POST,

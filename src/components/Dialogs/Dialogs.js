@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import a from "./Dialogs.module.css";
 import Dialog from "./Dialog/Dialog";
 import Message from "./Message/Message";
@@ -11,28 +11,46 @@ import {
 import { withRouter } from "react-router-dom";
 
 const Dialogs = (props) => {
+  const [openOdDialog, setOpenedDialog] = useState(0);
   if (props.dialogsData.length === 0) {
     props.openDialogData();
   }
 
-  if (props.match.params.userid && props.messageData.length === 0) {
+  if (props.match.params.userid !== openOdDialog) {
     props.openMessageData(props.match.params.userid);
+    setOpenedDialog(props.match.params.userid);
   }
 
   let dialogs = "";
   if (props.dialogsData.length > 0) {
     dialogs = props.dialogsData.map((d) => (
-      <Dialog name={d.userName} id={d.id} photos={d.photos.small} newMessagesCount={d.newMessagesCount} key={d.id} />
+      <Dialog
+        name={d.userName}
+        id={d.id}
+        photos={d.photos.small}
+        newMessagesCount={d.newMessagesCount}
+        key={d.id}
+      />
     ));
   }
 
-   // TODO Добавляем сообщения
+  // TODO Добавляем сообщения
   let messages = props.messageData.map((m) => (
-    <Message authorPostID={props.authorPostID} profileData={props.profileData} Author={props.dialogsData.filter(x => m.senderId === x.id )} message={m.body} senderId={m.senderId} key={m.id} />
+    <Message
+      messageId={m.id}
+      authorPostID={props.authorPostID}
+      profileData={props.profileData}
+      Author={props.dialogsData.filter((x) => m.senderId === x.id)}
+      message={m.body}
+      senderId={m.senderId}
+      key={m.id}
+    />
   ));
 
   let addPost = (data) => {
-    props.addPost(data.message, props.authorPostID);
+    if (props.match.params.userid) {
+      props.addPost(data.message, props.match.params.userid);
+    }
   };
 
   return (
